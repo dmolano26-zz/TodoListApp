@@ -6,10 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActividadRepository")
- * Autor: Diego Molano
- * Fecha: 17 Mayo 2019
- * Descripción: Modelo para gestionar las actividades
- * Atributos: id, nombre, descripcion, categoria, estado 
  */
 class Actividad
 {
@@ -31,8 +27,8 @@ class Actividad
     private $descripcion;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Categoria", mappedBy="actividad")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categoria")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $categoria;
 
@@ -75,7 +71,7 @@ class Actividad
         return $this->categoria;
     }
 
-    public function setCategoria(Categoria $categoria): self
+    public function setCategoria(?Categoria $categoria): self
     {
         $this->categoria = $categoria;
 
