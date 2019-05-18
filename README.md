@@ -8,3 +8,6 @@
 - Popper 1.14 (CDN)
 - Base de Datos PostgreSQL 10.7
 - Doctrine ORM
+
+## Modelo Entidad Relación
+Archivo añadido en la raiz del repositorio llamado "MER - TodoListApp.jpg"
