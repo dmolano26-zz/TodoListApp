@@ -31,8 +31,8 @@ class Actividad
     private $descripcion;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Categoria", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="App\Entity\Categoria", mappedBy="actividad")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $categoria;
 

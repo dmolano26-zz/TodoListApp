@@ -32,6 +32,15 @@
                     </tr>
                 {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>   
+            </tfoot>
         </table>
     {% else %}
         <p>No hay registros para visualizar</p>
@@ -39,5 +48,10 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('#personas').dataTable()
+        });
+    </script>
     <script src="/js/main.js"></script>
 {% endblock %}

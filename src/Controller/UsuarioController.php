@@ -33,26 +33,6 @@ class UsuarioController extends AbstractController
     }
 
     /**
-     * @Route("/usuario/save")
-     * Autor: Diego Molano
-     * Fecha: 17 Mayo 2019
-     * Descripción: Función usada para guardar información estatica en la BD.
-     */
-    public function save() {
-        $entityManager = $this->getDoctrine()->getManager();
-        $usuario = new Usuario();
-        $pass = md5('dmolano123');
-        $usuario->setUsername('dmolano');
-        $usuario->setPassword($pass);
-        $usuario->setPersona(1);
-
-        $entityManager->persist($usuario);
-        $entityManager->flush();
-
-        return new Response('Guardado el usuario. Su ID es: '.$usuario->getId());
-    }
-
-    /**
      * @Route("/usuario/new", name="new_usuario")
      * Method({"GET", "POST"})
      * Autor: Diego Molano
@@ -64,14 +44,14 @@ class UsuarioController extends AbstractController
 
         $form = $this->createFormBuilder($usuario)
             ->add(
-                'username', TextType::class, array(
+                'usuario', TextType::class, array(
                     'attr' => array(
                         'class' => 'form-control'
                     )   
                 )
             )
             ->add(
-                'password', PasswordType::class, array(
+                'contrasena', PasswordType::class, array(
                     'attr' => array(
                         'class' => 'form-control'
                     )
@@ -86,7 +66,7 @@ class UsuarioController extends AbstractController
                         'class' => 'form-control'
                     ),
                 
-                    // uses the User.username property as the visible option string
+                    // uses the User.usuario property as the visible option string
                     'choice_label' => function(Persona $persona) {
                         return sprintf('(%d) %s', $persona->getId(), $persona->getNombres());
                     },
@@ -133,14 +113,14 @@ class UsuarioController extends AbstractController
 
         $form = $this->createFormBuilder($usuario)
             ->add(
-                'username', TextType::class, array(
+                'usuario', TextType::class, array(
                     'attr' => array(
                         'class' => 'form-control'
                     )   
                 )
             )
             ->add(
-                'password', PasswordType::class, array(
+                'contrasena', PasswordType::class, array(
                     'attr' => array(
                         'class' => 'form-control'
                     )
@@ -155,7 +135,7 @@ class UsuarioController extends AbstractController
                         'class' => 'form-control'
                     ),
                 
-                    // uses the User.username property as the visible option string
+                    // uses the User.usuario property as the visible option string
                     'choice_label' => function(Persona $persona) {
                         return sprintf('(%d) %s', $persona->getId(), $persona->getNombres());
                     },

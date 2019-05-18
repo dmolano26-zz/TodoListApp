@@ -35,5 +35,10 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('#categorias').dataTable()
+        });
+    </script>
     <script src="/js/main.js"></script>
 {% endblock %}

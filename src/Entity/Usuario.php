@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Autor: Diego Molano
  * Fecha: 17 Mayo 2019
  * Descripción: Modelo para gestionar los usuarios del sistema
- * Atributos: id, username, password, persona
+ * Atributos: id, usuario, contrasena, persona
  */
 class Usuario
 {
@@ -23,16 +23,16 @@ class Usuario
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $username;
+    private $usuario;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $password;
+    private $contrasena;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Persona", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\Persona")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $persona;
 
@@ -41,26 +41,26 @@ class Usuario
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getusuario(): ?string
     {
-        return $this->username;
+        return $this->usuario;
     }
 
-    public function setUsername(string $username): self
+    public function setusuario(string $usuario): self
     {
-        $this->username = $username;
+        $this->usuario = $usuario;
 
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getcontrasena(): ?string
     {
-        return $this->password;
+        return $this->contrasena;
     }
 
-    public function setPassword(string $password): self
+    public function setcontrasena(string $contrasena): self
     {
-        $this->password = $password;
+        $this->contrasena = $contrasena;
 
         return $this;
     }

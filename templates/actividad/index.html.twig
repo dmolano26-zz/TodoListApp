@@ -41,5 +41,10 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('#actividades').dataTable()
+        });
+    </script>
     <script src="/js/main.js"></script>
 {% endblock %}

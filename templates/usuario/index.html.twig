@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Username</th>
+                    <th>Usuario</th>
                     <th>Persona</th>
                     <th>Acciones</th>
                 </tr>   
@@ -20,7 +20,7 @@
                 {% for usuario in usuarios %}
                     <tr>    
                         <td>{{ usuario.id }}</td>
-                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.usuario }}</td>
                         <td>{{ usuario.persona.nombres }} {{ usuario.persona.apellidos }}</td>
                         <td>
                             <a class="btn btn-info" href="/usuario/{{ usuario.id }}"><span class="fas fa-eye"></span> Ver</a>
@@ -37,5 +37,10 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('#usuarios').dataTable()
+        });
+    </script>
     <script src="/js/main.js"></script>
 {% endblock %}
