@@ -9,8 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use App\Entity\Categoria;
+use App\Entity\Actividad;
 
 
 class CategoriaController extends AbstractController
@@ -21,12 +24,38 @@ class CategoriaController extends AbstractController
      * Fecha: 17 Mayo 2019
      * Descripción: Controlador para el componente de categoria
      */
-    public function index()
+    public function index(Request $request)
     {
         $categorias = $this->getDoctrine()->getRepository(Categoria::class)->findAll();
+        $form = $this->createFormBuilder()
+        ->add(
+            'actividad', EntityType::class, [
+                'class' => Actividad::class,
+                'placeholder' => 'Busqueda de actividad',
+                'attr' => array(
+                    'class' => 'form-control select2 mr-sm-2'
+                ),
+                'choice_label' => function(Actividad $actividad) {
+                    return sprintf('(%d) %s', $actividad->getId(), $actividad->getNombre());
+                },
+            ],
+        )
+        ->add(
+            'buscar', ButtonType::class, array(
+                'label' => 'Buscar',
+                'attr' => array(
+                    'class' => 'btn btn-success my-2 my-sm-0',
+                    'onclick' => 'buscar_actividad();'
+                )
+            )
+        )
+        ->getForm();
+
+        $form->handleRequest($request);
         return $this->render('categoria/index.html.twig', [
             'controller_name' => 'categoriaController',
-            'categorias' => $categorias
+            'categorias' => $categorias,
+            'form' => $form->createView()
         ]);
     }
 

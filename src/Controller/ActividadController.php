@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -25,12 +26,38 @@ class ActividadController extends AbstractController
      * Fecha: 17 Mayo 2019
      * Descripción: Controlador para el componente de actividad
      */
-    public function index()
+    public function index(Request $request)
     {
         $actividades = $this->getDoctrine()->getRepository(Actividad::class)->findAll();
+        $form = $this->createFormBuilder()
+        ->add(
+            'actividad', EntityType::class, [
+                'class' => Actividad::class,
+                'placeholder' => 'Busqueda de actividad',
+                'attr' => array(
+                    'class' => 'form-control select2 mr-sm-2'
+                ),
+                'choice_label' => function(Actividad $actividad) {
+                    return sprintf('(%d) %s', $actividad->getId(), $actividad->getNombre());
+                },
+            ],
+        )
+        ->add(
+            'buscar', ButtonType::class, array(
+                'label' => 'Buscar',
+                'attr' => array(
+                    'class' => 'btn btn-success my-2 my-sm-0',
+                    'onclick' => 'buscar_actividad();'
+                )
+            )
+        )
+        ->getForm();
+
+        $form->handleRequest($request);
         return $this->render('actividad/index.html.twig', [
             'controller_name' => 'actividadController',
-            'actividades' => $actividades
+            'actividades' => $actividades,
+            'form' => $form->createView()
         ]);
     }
 
@@ -61,21 +88,14 @@ class ActividadController extends AbstractController
             )
             ->add(
                 'categoria', EntityType::class, [
-                    // looks for choices from this entity
                     'class' => Categoria::class,
                     'placeholder' => 'Escoja una categoria',
                     'attr' => array(
                         'class' => 'form-control'
                     ),
-                
-                    // uses the User.username property as the visible option string
                     'choice_label' => function(Categoria $categoria) {
                         return sprintf('(%d) %s', $categoria->getId(), $categoria->getNombre());
                     },
-                
-                    // used to render a select box, check boxes or radios
-                    // 'multiple' => true,
-                    // 'expanded' => true,
                 ],
             )
             ->add(
@@ -141,21 +161,14 @@ class ActividadController extends AbstractController
         )
         ->add(
             'categoria', EntityType::class, [
-                // looks for choices from this entity
                 'class' => Categoria::class,
                 'placeholder' => 'Escoja una categoria',
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-            
-                // uses the User.username property as the visible option string
                 'choice_label' => function(Categoria $categoria) {
                     return sprintf('(%d) %s', $categoria->getId(), $categoria->getNombre());
                 },
-            
-                // used to render a select box, check boxes or radios
-                // 'multiple' => true,
-                // 'expanded' => true,
             ],
         )
         ->add(

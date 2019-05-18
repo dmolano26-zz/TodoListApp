@@ -2,6 +2,12 @@
 
 {% block title %}Personas{% endblock %}
 
+{% block busqueda %} 
+    <form class="form-inline my-2 my-lg-0">
+        {{ form(form) }}
+    </form>
+{% endblock busqueda %}
+
 {% block titulo_panel %} Listado de personas {% endblock titulo_panel %}
 {% block botones_panel %} <a class="btn btn-success" href="/persona/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
 
@@ -50,8 +56,14 @@
 {% block javascripts %}
     <script>
         $(document).ready(function() {
-            $('#personas').dataTable()
+            $('#personas').dataTable();
+            $('.select2').select2();
         });
+
+        function buscar_actividad() {
+            var valor = $("#form_actividad").val();
+            window.location.replace("/actividad/"+valor);
+        }
     </script>
     <script src="/js/main.js"></script>
 {% endblock %}

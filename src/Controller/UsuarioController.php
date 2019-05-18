@@ -10,10 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use App\Entity\Usuario;
 use App\Entity\Persona;
+use App\Entity\Actividad;
 
 class UsuarioController extends AbstractController
 {
@@ -23,12 +25,38 @@ class UsuarioController extends AbstractController
      * Fecha: 17 Mayo 2019
      * Descripción: Controlador para el componente de Usuario
      */
-    public function index()
+    public function index(Request $request)
     {
         $usuarios = $this->getDoctrine()->getRepository(Usuario::class)->findAll();
+        $form = $this->createFormBuilder()
+        ->add(
+            'actividad', EntityType::class, [
+                'class' => Actividad::class,
+                'placeholder' => 'Busqueda de actividad',
+                'attr' => array(
+                    'class' => 'form-control select2 mr-sm-2'
+                ),
+                'choice_label' => function(Actividad $actividad) {
+                    return sprintf('(%d) %s', $actividad->getId(), $actividad->getNombre());
+                },
+            ],
+        )
+        ->add(
+            'buscar', ButtonType::class, array(
+                'label' => 'Buscar',
+                'attr' => array(
+                    'class' => 'btn btn-success my-2 my-sm-0',
+                    'onclick' => 'buscar_actividad();'
+                )
+            )
+        )
+        ->getForm();
+
+        $form->handleRequest($request);
         return $this->render('usuario/index.html.twig', [
             'controller_name' => 'usuarioController',
-            'usuarios' => $usuarios
+            'usuarios' => $usuarios,
+            'form' => $form->createView()
         ]);
     }
 
@@ -59,21 +87,14 @@ class UsuarioController extends AbstractController
             )
             ->add(
                 'persona', EntityType::class, [
-                    // looks for choices from this entity
                     'class' => Persona::class,
                     'placeholder' => 'Escoja una persona',
                     'attr' => array(
                         'class' => 'form-control'
                     ),
-                
-                    // uses the User.usuario property as the visible option string
                     'choice_label' => function(Persona $persona) {
                         return sprintf('(%d) %s', $persona->getId(), $persona->getNombres());
                     },
-                
-                    // used to render a select box, check boxes or radios
-                    // 'multiple' => true,
-                    // 'expanded' => true,
                 ],
             )
             ->add(
@@ -128,21 +149,14 @@ class UsuarioController extends AbstractController
             )
             ->add(
                 'persona', EntityType::class, [
-                    // looks for choices from this entity
                     'class' => Persona::class,
                     'placeholder' => 'Escoja una persona',
                     'attr' => array(
                         'class' => 'form-control'
                     ),
-                
-                    // uses the User.usuario property as the visible option string
                     'choice_label' => function(Persona $persona) {
                         return sprintf('(%d) %s', $persona->getId(), $persona->getNombres());
                     },
-                
-                    // used to render a select box, check boxes or radios
-                    // 'multiple' => true,
-                    // 'expanded' => true,
                 ],
             )
             ->add(
@@ -188,7 +202,6 @@ class UsuarioController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($usuario);
         $entityManager->flush();
-
         $response = new Response();
         $response->send();
     }

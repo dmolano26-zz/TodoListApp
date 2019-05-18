@@ -2,6 +2,12 @@
 
 {% block title %}Actividades{% endblock %}
 
+{% block busqueda %} 
+    <form class="form-inline my-2 my-lg-0">
+        {{ form(form) }}
+    </form>
+{% endblock busqueda %}
+
 {% block titulo_panel %} Listado de actividades {% endblock titulo_panel %}
 {% block botones_panel %} <a class="btn btn-success" href="/actividad/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
 
@@ -34,6 +40,16 @@
                     </tr>
                 {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Categoria</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>   
+            </tfoot>
         </table>
     {% else %}
         <p>No hay registros para visualizar</p>
@@ -43,8 +59,14 @@
 {% block javascripts %}
     <script>
         $(document).ready(function() {
-            $('#actividades').dataTable()
+            $('#actividades').dataTable();
+            $('.select2').select2();
         });
+        
+        function buscar_actividad() {
+            var valor = $("#form_actividad").val();
+            window.location.replace("/actividad/"+valor);
+        }
     </script>
     <script src="/js/main.js"></script>
 {% endblock %}

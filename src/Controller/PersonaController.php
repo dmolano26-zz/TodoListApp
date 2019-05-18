@@ -10,8 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use App\Entity\Persona;
+use App\Entity\Actividad;
 
 class PersonaController extends AbstractController
 {
@@ -21,32 +24,39 @@ class PersonaController extends AbstractController
      * Fecha: 17 Mayo 2019
      * Descripción: Función encargada de la vista principal de Personas
      */
-    public function index()
+    public function index(Request $request)
     {
         $personas = $this->getDoctrine()->getRepository(Persona::class)->findAll();
+        $form = $this->createFormBuilder()
+        ->add(
+            'actividad', EntityType::class, [
+                'class' => Actividad::class,
+                'placeholder' => 'Busqueda de actividad',
+                'attr' => array(
+                    'class' => 'form-control select2 mr-sm-2'
+                ),
+                'choice_label' => function(Actividad $actividad) {
+                    return sprintf('(%d) %s', $actividad->getId(), $actividad->getNombre());
+                },
+            ],
+        )
+        ->add(
+            'buscar', ButtonType::class, array(
+                'label' => 'Buscar',
+                'attr' => array(
+                    'class' => 'btn btn-success my-2 my-sm-0',
+                    'onclick' => 'buscar_actividad();'
+                )
+            )
+        )
+        ->getForm();
+
+        $form->handleRequest($request);
         return $this->render('persona/index.html.twig', [
             'controller_name' => 'PersonaController',
-            'personas' => $personas
+            'personas' => $personas,
+            'form' => $form->createView()
         ]);
-    }
-
-    /**
-     * @Route("/persona/save")
-     * Autor: Diego Molano
-     * Fecha: 17 Mayo 2019
-     * Descripción: Función usada para guardar información estatica en la BD.
-     */
-    public function save() {
-        $entityManager = $this->getDoctrine()->getManager();
-        $persona = new Persona();
-        $persona->setNombres('DIEGO FERNANDO');
-        $persona->setApellidos('MOLANO CEBALLOS');
-        $persona->setEmail('diego.molano26@hotmail.com');
-
-        $entityManager->persist($persona);
-        $entityManager->flush();
-
-        return new Response('Guardada la persona. Su ID es: '.$persona->getId());
     }
 
     /**
