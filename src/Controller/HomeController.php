@@ -5,18 +5,18 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UsuarioController extends AbstractController
+class HomeController extends AbstractController
 {
     /**
-     * @Route("/usuario", name="usuario")
+     * @Route("/", name="home")
      * Autor: Diego Molano
      * Fecha: 17 Mayo 2019
-     * Descripción: Controlador para el componente de Usuario
+     * Descripción: Controlador para la página inicial
      */
     public function index()
     {
-        return $this->render('usuario/index.html.twig', [
-            'controller_name' => 'UsuarioController',
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'HomeController',
         ]);
     }
 }

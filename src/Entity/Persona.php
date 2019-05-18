@@ -6,6 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonaRepository")
+ * Autor: Diego Molano
+ * Fecha: 17 Mayo 2019
+ * Descripción: Modelo para gestionar las personas
+ * Atributos: id, nombres, apellidos, email
  */
 class Persona
 {

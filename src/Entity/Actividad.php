@@ -6,6 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActividadRepository")
+ * Autor: Diego Molano
+ * Fecha: 17 Mayo 2019
+ * Descripción: Modelo para gestionar las actividades
+ * Atributos: id, nombre, descripcion, categoria, estado 
  */
 class Actividad
 {

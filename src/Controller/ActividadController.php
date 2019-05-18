@@ -9,6 +9,9 @@ class ActividadController extends AbstractController
 {
     /**
      * @Route("/actividad", name="actividad")
+     * Autor: Diego Molano
+     * Fecha: 17 Mayo 2019
+     * Descripción: Controlador para el componente de Actividad
      */
     public function index()
     {

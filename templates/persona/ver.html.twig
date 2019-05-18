@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personas{% endblock %}
+
+{% block titulo_panel %} Información de la persona {% endblock titulo_panel %}
+{% block botones_panel %} <a class="btn btn-success" href="#"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
+
+{% block contenido_panel %}
+    <table class="table table-striped table-bordered">
+        <tr>    
+            <td><b>ID:</b> {{ persona.id }}</td>
+        </tr>
+        <tr>
+            <td><b>Nombres:</b> {{ persona.nombres }}</td>
+        </tr>
+        <tr>    
+            <td><b>Apellidos:</b> {{ persona.apellidos }}</td>
+        </tr>
+        <tr>    
+            <td><b>Email:</b> {{ persona.email }}</td>
+        </tr>
+    </table>
+    <a href="/persona"><span class="fas fa-arrow-left"></span>Volver a la lista</a>
+{% endblock %}

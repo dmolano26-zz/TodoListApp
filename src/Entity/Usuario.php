@@ -6,6 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
+ * Autor: Diego Molano
+ * Fecha: 17 Mayo 2019
+ * Descripción: Modelo para gestionar los usuarios del sistema
+ * Atributos: id, username, password, persona
  */
 class Usuario
 {
