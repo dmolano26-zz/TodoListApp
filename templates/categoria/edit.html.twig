@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorias{% endblock %}
+{% block titulo_panel %} Formulario de actualización {% endblock titulo_panel %}
+
+{% block body %}
+    <br>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,20 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Categoorias{% endblock %}
+{% block title %}Categorias{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block titulo_panel %} Listado de categorias {% endblock titulo_panel %}
+{% block botones_panel %} <a class="btn btn-success" href="/categoria/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block contenido_panel %}
+    {% if categorias %}
+        <table class="table table-striped" id="categorias">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombres</th>
+                    <th>Acciones</th>
+                </tr>   
+            </thead>
+            <tbody>
+                {% for categoria in categorias %}
+                    <tr>    
+                        <td>{{ categoria.id }}</td>
+                        <td>{{ categoria.nombre }}</td>
+                        <td>
+                            <a class="btn btn-info" href="/categoria/{{ categoria.id }}"><span class="fas fa-eye"></span> Ver</a>
+                            <a class="btn btn-primary" href="/categoria/edit/{{ categoria.id }}"><span class="fas fa-edit"></span> Editar</a>
+                            <a class="btn btn-danger delete-categoria" href="#" data-id="{{ categoria.id }}"><span class="fas fa-trash"></span> Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay registros para visualizar</p>
+    {% endif %}
+{% endblock %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/dmolano/Documentos/proyectos_symfony/TodoListApp/src/Controller/CategoriaController.php'|file_link(0) }}">src/Controller/CategoriaController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/dmolano/Documentos/proyectos_symfony/TodoListApp/templates/categoria/index.html.twig'|file_link(0) }}">templates/categoria/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block javascripts %}
+    <script src="/js/main.js"></script>
 {% endblock %}

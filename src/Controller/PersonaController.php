@@ -56,7 +56,7 @@ class PersonaController extends AbstractController
      * Fecha: 17 Mayo 2019
      * Descripción: Función usada para crear un nuevo registro de persona.
      */
-    public function new(Request $request) {
+    public function new_persona(Request $request) {
         $persona = new Persona();
 
         $form = $this->createFormBuilder($persona)
@@ -112,7 +112,7 @@ class PersonaController extends AbstractController
      * Fecha: 17 Mayo 2019
      * Descripción: Función usada para editar un registro de persona.
      */
-    public function edit(Request $request, $id) {
+    public function edit_persona(Request $request, $id) {
         $persona = new Persona();
         $persona = $this->getDoctrine()->getRepository(Persona::class)->find($id);
 
@@ -161,22 +161,22 @@ class PersonaController extends AbstractController
     }
 
     /**
-     * @Route("/persona/{id}", name="ver")
+     * @Route("/persona/{id}", name="ver_persona")
      * Autor: Diego Molano
      * Fecha: 17 Mayo 2019
      * Descripción: Función usada para ver el detalle de un registro.
      */
-    public function ver($id) {
+    public function ver_persona($id) {
         $persona = $this->getDoctrine()->getRepository(Persona::class)->find($id);
 
         return $this->render('persona/ver.html.twig', array('persona' => $persona));
     }
 
     /**
-     * @Route("/persona/delete/{id}")
+     * @Route("/persona/delete_persona/{id}")
      * @Method({"DELETE"})
      */
-    public function delete(Request $request, $id) {
+    public function delete_persona(Request $request, $id) {
         $persona = $this->getDoctrine()->getRepository(Persona::class)->find($id);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($persona);

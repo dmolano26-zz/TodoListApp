@@ -2,19 +2,44 @@
 
 {% block title %}Actividades{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block titulo_panel %} Listado de actividades {% endblock titulo_panel %}
+{% block botones_panel %} <a class="btn btn-success" href="/actividad/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block contenido_panel %}
+    {% if actividades %}
+        <table class="table table-striped" id="actividades">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Categoria</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>   
+            </thead>
+            <tbody>
+                {% for actividad in actividades %}
+                    <tr>    
+                        <td>{{ actividad.id }}</td>
+                        <td>{{ actividad.nombre }}</td>
+                        <td>{{ actividad.descripcion }}</td>
+                        <td>{{ actividad.categoria.nombre }}</td>
+                        <td>{% if actividad.estado == '0' %} PENDIENTE {% else %} REALIZADA {% endif %}</td>
+                        <td>
+                            <a class="btn btn-info" href="/actividad/{{ actividad.id }}"><span class="fas fa-eye"></span> Ver</a>
+                            <a class="btn btn-primary" href="/actividad/edit/{{ actividad.id }}"><span class="fas fa-edit"></span> Editar</a>
+                            <a class="btn btn-danger delete-actividad" href="#" data-id="{{ actividad.id }}"><span class="fas fa-trash"></span> Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay registros para visualizar</p>
+    {% endif %}
+{% endblock %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/dmolano/Documentos/proyectos_symfony/TodoListApp/src/Controller/ActividadController.php'|file_link(0) }}">src/Controller/ActividadController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/dmolano/Documentos/proyectos_symfony/TodoListApp/templates/actividad/index.html.twig'|file_link(0) }}">templates/actividad/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block javascripts %}
+    <script src="/js/main.js"></script>
 {% endblock %}

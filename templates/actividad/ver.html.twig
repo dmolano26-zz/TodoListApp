@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actividades{% endblock %}
+
+{% block titulo_panel %} Información de actividad {% endblock titulo_panel %}
+{% block botones_panel %} <a class="btn btn-success"href="/actividad/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
+
+{% block contenido_panel %}
+    <table class="table table-striped table-bordered">
+        <tr>    
+            <td><b>ID:</b> {{ actividad.id }}</td>
+        </tr>
+        <tr>
+            <td><b>Nombre:</b> {{ actividad.nombre }}</td>
+        </tr>
+        <tr>    
+            <td><b>Descripción:</b> {{ actividad.descripcion }}</td>
+        </tr>
+        <tr>    
+            <td><b>Categoria:</b> {{ actividad.categoria.nombre }}</td>
+        </tr>
+        <tr>    
+            <td><b>Estado:</b> {% if actividad.estado == '0' %} PENDIENTE {% else %} REALIZADA {% endif %} </td>
+        </tr>
+    </table>
+    <a href="/actividad"><span class="fas fa-arrow-left"></span>Volver a la lista</a>
+{% endblock %}
