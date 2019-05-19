@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface; 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Descripción: Modelo para gestionar los usuarios del sistema
  * Atributos: id, usuario, contrasena, persona
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -76,4 +77,15 @@ class Usuario
 
         return $this;
     }
+
+    public function getRoles()
+    {
+        return [
+            'ROLE_USER'
+        ];
+    }
+
+    public function getSalt() {}
+
+    public function eraseCredentials() {}
 }
