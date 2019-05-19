@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 use App\Entity\Usuario;
 use App\Entity\Persona;
@@ -19,6 +21,12 @@ use App\Entity\Actividad;
 
 class UsuarioController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
     /**
      * @Route("/usuario", name="usuario_list")
      * Autor: Diego Molano
@@ -72,14 +80,14 @@ class UsuarioController extends AbstractController
 
         $form = $this->createFormBuilder($usuario)
             ->add(
-                'usuario', TextType::class, array(
+                'username', TextType::class, array(
                     'attr' => array(
                         'class' => 'form-control'
                     )   
                 )
             )
             ->add(
-                'contrasena', PasswordType::class, array(
+                'password', PasswordType::class, array(
                     'attr' => array(
                         'class' => 'form-control'
                     )
@@ -108,12 +116,25 @@ class UsuarioController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $usuario = $form->getData();
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($usuario);
-                $entityManager->flush();
-
-                return $this->redirectToRoute('usuario_list');
+                try {
+                    $username = $form['username']->getData();
+                    $password = $form['password']->getData();
+                    $persona = $form['persona']->getData();
+                    $usuario = new Usuario();
+                    $usuario->setUsername($username);
+                    $usuario->setPassword($this->passwordEncoder->encodePassword(
+                                    $usuario,
+                                    $password
+                                ));
+                    $usuario->setPersona($persona);                   
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($usuario);
+                    $entityManager->flush();
+                    return $this->redirectToRoute('usuario_list');
+                } catch (UniqueConstraintViolationException $e) {
+                    echo 'Ya existe un registro con esta información';
+                }
+                
             }
 
             return $this->render('usuario/new.html.twig', array(
@@ -134,14 +155,14 @@ class UsuarioController extends AbstractController
 
         $form = $this->createFormBuilder($usuario)
             ->add(
-                'usuario', TextType::class, array(
+                'username', TextType::class, array(
                     'attr' => array(
                         'class' => 'form-control'
                     )   
                 )
             )
             ->add(
-                'contrasena', PasswordType::class, array(
+                'password', PasswordType::class, array(
                     'attr' => array(
                         'class' => 'form-control'
                     )
@@ -170,10 +191,22 @@ class UsuarioController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->flush();
-
-                return $this->redirectToRoute('usuario_list');
+                try {
+                    $username = $form['username']->getData();
+                    $password = $form['password']->getData();
+                    $persona = $form['persona']->getData();
+                    $usuario->setUsername($username);
+                    $usuario->setPassword($this->passwordEncoder->encodePassword(
+                                    $usuario,
+                                    $password
+                                ));
+                    $usuario->setPersona($persona);     
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->flush();    
+                    return $this->redirectToRoute('usuario_list');
+                } catch (UniqueConstraintViolationException $e) {
+                    echo 'Ya existe un registro con esta información';
+                }
             }
 
             return $this->render('usuario/edit.html.twig', array(

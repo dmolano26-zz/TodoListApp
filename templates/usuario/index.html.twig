@@ -26,7 +26,7 @@
                 {% for usuario in usuarios %}
                     <tr>    
                         <td>{{ usuario.id }}</td>
-                        <td>{{ usuario.usuario }}</td>
+                        <td>{{ usuario.username }}</td>
                         <td>{{ usuario.persona.nombres }} {{ usuario.persona.apellidos }}</td>
                         <td>
                             <a class="btn btn-info" href="/usuario/{{ usuario.id }}"><span class="fas fa-eye"></span> Ver</a>

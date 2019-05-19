@@ -1,12 +1,12 @@
 security:
     encoders:
-        App\Entity\User:
-            algorithm: argon2i
+        App\Entity\Usuario:
+            algorithm: bcrypt
     providers:
         my_provider:
             entity: 
                 class: App\Entity\Usuario
-                property: usuario
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -17,7 +17,13 @@ security:
                 login_path: login
                 check_path: login
                 provider: my_provider
+            logout:
+                path: /logout
+                target: /login
     access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/persona, roles: ROLE_USER }
+        - { path: ^/usuario, roles: ROLE_USER }
+        - { path: ^/categoria, roles: ROLE_USER }
+        - { path: ^/actividad, roles: ROLE_USER }
