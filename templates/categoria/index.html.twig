@@ -9,7 +9,7 @@
 {% endblock busqueda %}
 
 {% block titulo_panel %} Listado de categorias {% endblock titulo_panel %}
-{% block botones_panel %} <a class="btn btn-success" href="/categoria/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
+{% block botones_panel %} <a class="btn btn-success" href="{{ url('new_categoria') }}" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
 
 {% block contenido_panel %}
     {% if categorias %}
@@ -27,8 +27,8 @@
                         <td>{{ categoria.id }}</td>
                         <td>{{ categoria.nombre }}</td>
                         <td>
-                            <a class="btn btn-info" href="/categoria/{{ categoria.id }}"><span class="fas fa-eye"></span> Ver</a>
-                            <a class="btn btn-primary" href="/categoria/edit/{{ categoria.id }}"><span class="fas fa-edit"></span> Editar</a>
+                            <a class="btn btn-info" href="{{ url('ver_categoria'), {'id': categoria.id} }}"><span class="fas fa-eye"></span> Ver</a>
+                            <a class="btn btn-primary" href="{{ url('edit_categoria'), {'id': categoria.id} }}"><span class="fas fa-edit"></span> Editar</a>
                             <a class="btn btn-danger delete-categoria" href="#" data-id="{{ categoria.id }}"><span class="fas fa-trash"></span> Eliminar</a>
                         </td>
                     </tr>
@@ -56,7 +56,7 @@
         
         function buscar_actividad() {
             var valor = $("#form_actividad").val();
-            window.location.replace("/actividad/"+valor);
+            window.location.replace("{{ url('ver_actividad'), {'id': "+valor+"} }}");
         }
     </script>
     <script src="/js/main.js"></script>

@@ -9,7 +9,7 @@
 {% endblock busqueda %}
 
 {% block titulo_panel %} Listado de personas {% endblock titulo_panel %}
-{% block botones_panel %} <a class="btn btn-success" href="/persona/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
+{% block botones_panel %} <a class="btn btn-success" href="{{ url('new_persona') }}" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
 
 {% block contenido_panel %}
     {% if personas %}
@@ -31,8 +31,8 @@
                         <td>{{ persona.apellidos }}</td>
                         <td>{{ persona.email }}</td>
                         <td>
-                            <a class="btn btn-info" href="/persona/{{ persona.id }}"><span class="fas fa-eye"></span> Ver</a>
-                            <a class="btn btn-primary" href="/persona/edit/{{ persona.id }}"><span class="fas fa-edit"></span> Editar</a>
+                            <a class="btn btn-info" href="{{ url('ver_persona', {'id': persona.id}) }}"><span class="fas fa-eye"></span> Ver</a>
+                            <a class="btn btn-primary" href="{{ url('edit_persona', {'id': persona.id}) }}"><span class="fas fa-edit"></span> Editar</a>
                             <a class="btn btn-danger delete-persona" href="#" data-id="{{ persona.id }}"><span class="fas fa-trash"></span> Eliminar</a>
                         </td>
                     </tr>
@@ -62,7 +62,7 @@
 
         function buscar_actividad() {
             var valor = $("#form_actividad").val();
-            window.location.replace("/actividad/"+valor);
+            window.location.replace("{{ url('ver_actividad', {'id': "+valor+"}) }}");
         }
     </script>
     <script src="/js/main.js"></script>

@@ -5,7 +5,7 @@ if (personas) {
         if (e.target.className === 'btn btn-danger delete-persona') {
             if (confirm('¿Está seguro?')) {
                 const id = e.target.getAttribute('data-id');
-                fetch(`/persona/delete_persona/${id}`, {
+                fetch(`usuario/delete_usuario/${id}`, {
                     method: 'DELETE'
                 }).then(res => window.location.reload());
             }

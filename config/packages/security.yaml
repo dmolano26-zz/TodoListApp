@@ -22,8 +22,8 @@ security:
                 target: /login
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
-        - { path: ^/persona, roles: ROLE_USER }
-        - { path: ^/usuario, roles: ROLE_USER }
-        - { path: ^/categoria, roles: ROLE_USER }
-        - { path: ^/actividad, roles: ROLE_USER }
+       # - { path: ^/, roles: ROLE_USER }
+       # - { path: ^/persona, roles: ROLE_USER }
+       # - { path: ^/usuario, roles: ROLE_USER }
+       # - { path: ^/categoria, roles: ROLE_USER }
+       # - { path: ^/actividad, roles: ROLE_USER }
