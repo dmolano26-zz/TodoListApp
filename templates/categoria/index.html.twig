@@ -27,8 +27,8 @@
                         <td>{{ categoria.id }}</td>
                         <td>{{ categoria.nombre }}</td>
                         <td>
-                            <a class="btn btn-info" href="{{ url('ver_categoria'), {'id': categoria.id} }}"><span class="fas fa-eye"></span> Ver</a>
-                            <a class="btn btn-primary" href="{{ url('edit_categoria'), {'id': categoria.id} }}"><span class="fas fa-edit"></span> Editar</a>
+                            <a class="btn btn-info" href="{{ url('ver_categoria', {'id': categoria.id}) }}"><span class="fas fa-eye"></span> Ver</a>
+                            <a class="btn btn-primary" href="{{ url('edit_categoria', {'id': categoria.id}) }}"><span class="fas fa-edit"></span> Editar</a>
                             <a class="btn btn-danger delete-categoria" href="#" data-id="{{ categoria.id }}"><span class="fas fa-trash"></span> Eliminar</a>
                         </td>
                     </tr>
@@ -56,7 +56,26 @@
         
         function buscar_actividad() {
             var valor = $("#form_actividad").val();
-            window.location.replace("{{ url('ver_actividad'), {'id': "+valor+"} }}");
+            var url = '{{ path("ver_actividad", {'id': 'valor'}) }}'; 
+            url = url.replace("valor", valor);
+            window.location.replace(url);
+        }
+
+        const categorias = document.getElementById('categorias');
+
+        if (categorias) {
+            categorias.addEventListener('click', (e) => {
+                if (e.target.className === 'btn btn-danger delete-categoria') {
+                    if (confirm('¿Está seguro?')) {
+                        const id = e.target.getAttribute('data-id');
+                        var url = '{{ path("delete_categoria", {'id': 'valor'}) }}'; 
+                        url = url.replace("valor", id); 
+                        fetch(url, {
+                            method: 'DELETE'
+                        }).then(res => window.location.reload());
+                    }
+                }
+            });
         }
     </script>
     <script src="/js/main.js"></script>

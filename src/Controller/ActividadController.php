@@ -217,7 +217,7 @@ class ActividadController extends AbstractController
     }
 
     /**
-     * @Route("/actividad/delete_actividad/{id}")
+     * @Route("/actividad/delete_actividad/{id}", name="delete_actividad")
      * @Method({"DELETE"})
      */
     public function delete_actividad(Request $request, $id) {

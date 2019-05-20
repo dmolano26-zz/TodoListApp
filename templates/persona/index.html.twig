@@ -62,7 +62,26 @@
 
         function buscar_actividad() {
             var valor = $("#form_actividad").val();
-            window.location.replace("{{ url('ver_actividad', {'id': "+valor+"}) }}");
+            var url = '{{ path("ver_actividad", {'id': 'valor'}) }}'; 
+            url = url.replace("valor", valor);
+            window.location.replace(url);
+        }
+
+        const personas = document.getElementById('personas');
+
+        if (personas) {
+            personas.addEventListener('click', (e) => {
+                if (e.target.className === 'btn btn-danger delete-persona') {
+                    if (confirm('¿Está seguro?')) {
+                        const id = e.target.getAttribute('data-id');
+                        var url = '{{ path("delete_persona", {'id': 'valor'}) }}'; 
+                        url = url.replace("valor", id); 
+                        fetch(url, {
+                            method: 'DELETE'
+                        }).then(res => window.location.reload());
+                    }
+                }
+            });
         }
     </script>
     <script src="/js/main.js"></script>

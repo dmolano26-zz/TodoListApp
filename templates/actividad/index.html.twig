@@ -9,7 +9,7 @@
 {% endblock busqueda %}
 
 {% block titulo_panel %} Listado de actividades {% endblock titulo_panel %}
-{% block botones_panel %} <a class="btn btn-success" href="/actividad/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
+{% block botones_panel %} <a class="btn btn-success" href="{{ url('new_actividad') }}" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
 
 {% block contenido_panel %}
     {% if actividades %}
@@ -33,8 +33,8 @@
                         <td>{{ actividad.categoria.nombre }}</td>
                         <td>{% if actividad.estado == '0' %} PENDIENTE {% else %} REALIZADA {% endif %}</td>
                         <td>
-                            <a class="btn btn-info" href="/actividad/{{ actividad.id }}"><span class="fas fa-eye"></span> Ver</a>
-                            <a class="btn btn-primary" href="/actividad/edit/{{ actividad.id }}"><span class="fas fa-edit"></span> Editar</a>
+                            <a class="btn btn-info" href="{{ url('ver_actividad', {'id': actividad.id}) }}"><span class="fas fa-eye"></span> Ver</a>
+                            <a class="btn btn-primary" href="{{ url('edit_actividad', {'id': actividad.id}) }}"><span class="fas fa-edit"></span> Editar</a>
                             <a class="btn btn-danger delete-actividad" href="#" data-id="{{ actividad.id }}"><span class="fas fa-trash"></span> Eliminar</a>
                         </td>
                     </tr>
@@ -65,7 +65,26 @@
         
         function buscar_actividad() {
             var valor = $("#form_actividad").val();
-            window.location.replace("/actividad/"+valor);
+            var url = '{{ path("ver_actividad", {'id': 'valor'}) }}'; 
+            url = url.replace("valor", valor);
+            window.location.replace(url);
+        }
+
+        const actividades = document.getElementById('actividades');
+        if (actividades) {
+            actividades.addEventListener('click', (e) => {
+                if (e.target.className === 'btn btn-danger delete-actividad') {
+                    if (confirm('¿Está seguro?')) {
+                        
+                        const id = e.target.getAttribute('data-id');
+                        var url = '{{ path("delete_actividad", {'id': 'valor'}) }}'; 
+                        url = url.replace("valor", id); 
+                        fetch(url, {
+                            method: 'DELETE'
+                        }).then(res => window.location.reload());
+                    }
+                }
+            });
         }
     </script>
     <script src="/js/main.js"></script>

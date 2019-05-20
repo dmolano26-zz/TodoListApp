@@ -183,7 +183,7 @@ class PersonaController extends AbstractController
     }
 
     /**
-     * @Route("/persona/delete_persona/{id}")
+     * @Route("/persona/delete_persona/{id}", name="delete_persona")
      * @Method({"DELETE"})
      */
     public function delete_persona(Request $request, $id) {
