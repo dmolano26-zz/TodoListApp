@@ -27,7 +27,9 @@
         
         function buscar_actividad() {
             var valor = $("#form_actividad").val();
-            window.location.replace("/actividad/"+valor);
+            var url = '{{ path("ver_actividad", {'id': 'valor'}) }}';
+            url = url.replace("valor", valor);
+            window.location.replace(url);
         }
     </script>
 

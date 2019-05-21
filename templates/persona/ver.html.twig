@@ -3,7 +3,7 @@
 {% block title %}Personas{% endblock %}
 
 {% block titulo_panel %} Información de la persona {% endblock titulo_panel %}
-{% block botones_panel %} <a class="btn btn-success" href="/persona/new" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
+{% block botones_panel %} <a class="btn btn-success" href="{{ url('new_persona') }}" style="margin-top: 10px !important; margin-right: 10px !important;"><span class="fas fa-plus"></span> Registrar</a> {% endblock botones_panel %}
 
 {% block contenido_panel %}
     <table class="table table-striped table-bordered">
